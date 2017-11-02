@@ -42,7 +42,7 @@ print '\nA transposta:\n{0}'.format(At)
 AAt = A * At
 print '\nAAt:\n{0}'.format(AAt)
 
-AAtInv = inv(AAt);
+AAtInv = inv(AAt)
 print '\nAAtInv:\n{0}'.format(AAtInv)
 
 print '\nAAtInv * AAt:\n{0}\n'.format((AAt * AAtInv).round(4))
