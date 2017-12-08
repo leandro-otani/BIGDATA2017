@@ -3,7 +3,7 @@ import time
 from pyspark import SparkContext
 from pyspark import SparkConf
 from operator import add
-#sc = código pra criar spark context 
+sc = SparkContext() 
 def euclideanDistance(baseTuple):
     coordinateA = baseTuple[0]
     coordinateB = baseTuple[1]
@@ -15,7 +15,7 @@ def parallelizedVelocityThreshold(dataset, threshold):
     firstSetRDD = sc.parallelize(dataset[:-1])
     secondSetRDD = sc.parallelize(dataset[1:])
     zippedRDD = firstSetRDD.zip(secondSetRDD)
-    mappedVelocities = zippedRDD.map(lambda x: (x[0],(euclideanDistance(x) / abs(x[0][0] - x[1][0])))
+    mappedVelocities = zippedRDD.map(lambda x: (x[0],(euclideanDistance(x) / abs(x[0][0] - x[1][0]))))
     
     classifiedVelocities =  (mappedVelocities
                                 .map(lambda x: (x[0], "Saccade" if x[1] > threshold else "Fixation"))
