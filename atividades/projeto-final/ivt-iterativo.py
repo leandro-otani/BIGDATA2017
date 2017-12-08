@@ -9,12 +9,9 @@ def euclideanDistance(coordinateA, coordinateB):
 def iterativeVelocityThreshold(dataset, threshold):
     mappedVelocities = []
     for index, point in enumerate(dataset):
-        if index == 0:
-            #first point as fixation
-            point = (point, 0)
-        else:
-            previousPoint = dataset[index-1]
-            mappedVelocities.append((point, euclideanDistance(previousPoint, point) / abs(point[0] - previousPoint[0])))
+        if index < (len(dataset) - 1):
+            nextPoint = dataset[index+1]
+            mappedVelocities.append((point, euclideanDistance(nextPoint, point) / abs(point[0] - nextPoint[0])))
 
     classifiedVelocities = []
     for index, point in enumerate(mappedVelocities):
@@ -43,11 +40,14 @@ def iterativeVelocityThreshold(dataset, threshold):
             centroid[0] = centroid[0] + point[0][0]
             centroid[1] = centroid[1] + point[0][1]
             centroid[2] = centroid[2] + point[0][2]
-        centroid = point[0]
+            
+        centroid[0] = centroid[0]/len(group)
+        centroid[1] = centroid[1]/len(group)
+        centroid[2] = centroid[2]/len(group)
         fixations.append(centroid)
     return fixations
 
-print iterativeVelocityThreshold([
+print (iterativeVelocityThreshold([
     (1512264894, 30, 27),
     (1512264904, 35, 27),
     (1512264914, 39, 30),
@@ -57,4 +57,4 @@ print iterativeVelocityThreshold([
     (1512264954, 315, 27),
     (1512264964, 320, 27),
     (1512264974, 317, 27)
-], 0.9)
+], 0.9))

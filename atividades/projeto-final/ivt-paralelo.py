@@ -15,7 +15,8 @@ def parallelizedVelocityThreshold(dataset, threshold):
     firstSetRDD = sc.parallelize(dataset[:-1])
     secondSetRDD = sc.parallelize(dataset[1:])
     zippedRDD = firstSetRDD.zip(secondSetRDD)
-    mappedVelocities = zippedRDD.map(lambda x: (x[0],(euclideanDistance(x) / abs(x[0][0] - x[1][0]))))
+    
+    mappedVelocities = zippedRDD.map(lambda x: (x[0],(euclideanDistance(x) / abs(x[1][0] - x[0][0]))))
     
     classifiedVelocities =  (mappedVelocities
                                 .map(lambda x: (x[0], "Saccade" if x[1] > threshold else "Fixation"))
@@ -54,4 +55,4 @@ print parallelizedVelocityThreshold([
     (1512264954, 315, 27),
     (1512264964, 320, 27),
     (1512264974, 317, 27)
-], 10)
+], 0.9)
