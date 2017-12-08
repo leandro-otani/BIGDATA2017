@@ -33,7 +33,7 @@ def parallelizedVelocityThreshold(dataset, threshold):
             if len(colapsedFixations) == 0 or saccadeHappened:
                 count += 1
                 saccadeHappened = False
-            print elem
+            #print elem
             colapsedFixations.append((count,elem[0]))
     
     colapsedRDD = sc.parallelize(colapsedFixations, 4)
